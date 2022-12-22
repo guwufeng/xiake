@@ -1,4 +1,0 @@
- deploy:
-   type: git
-   repository: git@github.com:ColorMao/ColorMao.github.io.git
-   branch: main
