@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"> 
+<title>网页版侠客dps计算器</title> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="shortcut icon" type="image/ico" href="images/yu.ico">
+<link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<style>
+.button {
+    background-color: #4CAFFF;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 1px;
+}
+.setcolor {
+    background-color: yellow;
+}
+.basecolor {
+    background-color: #EEEEEE;
+}
+</style>
+<body id="a" style="background:#EEEEEE">
+    <div class="container" style="padding:5px 5px;background:#EEEEEE">
+		<div class="col-md-12 ">
+			<div class="row clearfix" >
+				<div class="col-md-12 " style="padding:5px 5px;background-color:#555555;color:white">
+				<h1>网页版侠客dps计算器</h1>		
+				</div>	
+            </div>				
+			<div class="row clearfix">						
+				<div class="col-md-3 col-xs-7" style="padding:5px 0px">
+						<h4 style="width:90%;background-color:#555555;color:white">白字面板：</h4>
+					     <textarea id="whitepart" style="height:110px;width:90%;padding:5px;background-color:#555555;color:white">气血上限提高371911
+全攻击提高4132</textarea>
+						<h4 style="width:90%;background-color:#555555;color:#4ee44e">绿字面板：</h4>
+						 <textarea id="greenpart" style="height:360px;width:90%;padding:5px;background-color:#555555;color:#4ee44e"></textarea>
+				</div>
+				<div class="col-md-2 col-xs-5" style="padding:0px 0px">
+					<h5 style="color:green">白字部分设置</h5>	
+					明辉甲	· 
+						<select id="houzhui" onchange="setequip()">
+  						    <option value=0 selected>血魂</option>
+ 						    <option value=1>斩切</option>
+ 						    <option value=2>明悟</option>
+ 						    <option value=3>深诣</option>
+							<option value=4>破击</option>
+ 						    <option value=5>洞悉</option>
+ 						    <option value=6>造极</option>
+							<option value=7>凝神</option>
+ 						    <option value=8>耐受</option>
+ 						    <option value=9>守御</option>
+							<option value=10>大御</option>
+ 						    <option value=11>海纳</option>
+						</select>
+					    <select id="qianghua" onchange="whitepart()">
+  						    <option value=0>+0</option>
+ 						    <option value=1>+1</option>
+ 						    <option value=2>+2</option>
+ 						    <option value=3>+3</option>
+							<option value=4>+4</option>
+ 						    <option value=5>+5</option>
+ 						    <option value=6>+6</option>
+							<option value=7>+7</option>
+ 						    <option value=8 selected>+8</option>
+						</select></p>
+						<h5 style="color:green">绿字部分设置</h5>	
+						<table border="0">	
+						<tr><td><p>气血上限</p></td><td><button onclick="decrease(0)">减</button></td><td><button onclick="increase(0)">加</button></td></tr>
+						<tr><td><p>全攻击</p></td><td><button onclick="decrease(1)">减</button></td><td><button onclick="increase(1)">加</button></td></tr>
+						<tr><td><p>全会心等级</p></td><td><button onclick="decrease(2)">减</button></td><td><button onclick="increase(2)">加</button></td></tr>
+						<tr><td><p>全会心效果等级</p></td><td><button onclick="decrease(3)">减</button></td><td><button onclick="increase(3)">加</button></td></tr>
+						<tr><td><p>全破防等级</p></td><td><button onclick="decrease(4)">减</button></td><td><button onclick="increase(4)">加</button></td></tr>
+						<tr><td><p>无视防御等级</p></td><td><button onclick="decrease(5)">减</button></td><td><button onclick="increase(5)">加</button></td></tr>
+						<tr><td><p>技能伤害</p></td><td><button onclick="decrease(6)">减</button></td><td><button onclick="increase(6)">加</button></td></tr>
+						<tr><td><p>凝神等级</p></td><td><button onclick="decrease(7)">减</button></td><td><button onclick="increase(7)">加</button></td></tr>
+						<tr><td><p>内功防御等级</p></td><td><button onclick="decrease(8)">减</button></td><td><button onclick="increase(8)">加</button></td></tr>
+						<tr><td><p>外功防御等级</p></td><td><button onclick="decrease(9)">减</button></td><td><button onclick="increase(9)">加</button></td></tr>
+						<tr><td><p>御劲等级</p></td><td><button onclick="decrease(10)">减</button></td><td><button onclick="increase(10)">加</button></td></tr>
+						<tr><td><p>治疗成效</p></td><td><button onclick="decrease(11)">减</button></td><td><button onclick="increase(11)">加</button></td></tr>
+						<tr><td><button onclick="guiling()" colspan="3" style="width:100%">绿字清零</button></td></tr>
+						<tr><td colspan="3">------------------</tr>
+						<tr><td><button colspan="3" onclick="saveequip()" style="width:100%">保存装备</button></td></tr>
+						</table>
+				</div>					
+				<div class="col-md-7 col-xs-12" style="height:550px;padding:5px 5px">
+					<div class="row clearfix" >
+						<div class="col-md-12 col-xs-12" style="padding:5px 5px;border:1px solid;">										
+						<ul class="nav nav-tabs">
+						<li class="active">
+							<a href="#panel-614796" data-toggle="tab">dps预期</a>
+						</li>
+						<li>
+							<a href="#panel-32391" data-toggle="tab">奶T指数</a>
+						</li>
+						<li a>
+							<button colspan=3 onclick="qingkong()" style="">清空记录</button>					
+						</li>
+						<li a>
+							<button colspan=3 onclick="shuoming()" style="">说明</button>					
+						</li>
+						</ul>
+						</div>
+					</div>
+					<div class="row clearfix" >
+						<div class="col-md-12 col-xs-12" style="height:494px;padding:5px 5px;border:1px solid;">
+							<div class="tabbable" id="tabs-1100">	
+								<div class="tab-content">						
+									<div class="tab-pane active" id="panel-614796">
+						<table id ="table2" border="1" style="width:100%">
+   					    <tr>
+        				<td style="width:9%">序</td>
+       					<td style="width:9%">阮归云</td>
+						<td style="width:9%">沈剑心</td>
+						<td style="width:9%">唐小珂</td>
+						<td style="width:9%">康宴别</td>
+						<td style="width:9%">沐晴柔</td>
+						<td style="width:9%">温折枝</td>
+						<td style="width:9%">年小鹿</td>
+						<td style="width:9%">装分</td>
+   				        </tr>
+                        </table>
+						</div>
+						<div class="tab-pane" id="panel-32391">
+						<table id ="table" border="1" style="width:100%">
+   					    <tr>
+        				<td style="width:16.5%">序</td>
+						<td style="width:16.5%">内防</td>
+						<td style="width:16.5%">外防</td>
+						<td style="width:16.5%">管家治疗</td>
+						<td style="width:16.5%">沐-治疗</td>
+						<td style="width:16.5%">装分</td>
+   				        </tr>
+                        </table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+			    </div>
+			</div>
+		</div>
+	</div>
+<script>
+var num_equip = 1;//装备序号
+const basenum = [20661.7,688.6,3345.7,2601.8,3345.7,2116,581.5,3114.9,4695.8,4695.8,857,688.7];//属性基数值
+var prosco = [0,0,0,0,0,0,0,0,0,0,0,0],score=0;//数组记录绿字装分
+var whitesco = [6,2,0,0,0,0,0,0,0,0,0,0];//数组记录白字装分
+var equipnum = [0,0,0,0,0,0,0,0,0,0,0,0];//装备总属性
+var basewords = ["气血上限提高","全攻击提高","全会心等级提高","全会心效果等级提高","全破防等级提高","无视防御等级提高","技能伤害提高","凝神等级提高","内功防御等级提高","外功防御等级提高","御劲等级提高","治疗成效提高"];
+//设置白字
+function setequip(){
+	whitesco = [3,2,0,0,0,0,0,0,0,0,0,0];
+	var i = document.getElementById("houzhui").value;
+	whitesco[i]=whitesco[i]+3;
+	whitepart();
+}
+function whitepart(){
+	var textforewhite="";
+	var qhua = document.getElementById("qianghua").value;
+	for(var i=0;i<12;i++){
+		if(whitesco[i]>0){
+			textforewhite = textforewhite+basewords[i]+(whitesco[i]*basenum[i]*(1+qhua*0.25)).toFixed(0)+"\n";
+		}
+	}
+	document.getElementById("whitepart").value= textforewhite;
+	analyse();
+}
+//增加属性
+function increase(i){
+    if(prosco[i]<36&&prosco[i]>=0&&score<36){
+		prosco[i]=prosco[i]+4.5;
+		score = score+4.5;
+	}else{
+		alert("绿字词条满了，不能再增加");
+	}
+	showlvzi();
+	analyse();
+}
+//增加属性
+function decrease(i){
+    if(prosco[i]<=36&&prosco[i]>0&&score>0){
+		prosco[i]=prosco[i]-4.5;
+		score = score-4.5;
+	}else{
+		alert("已经为零了，不能再减了");
+	}
+	showlvzi();
+	analyse();
+}
+//属性归零
+function guiling(){
+	prosco = [0,0,0,0,0,0,0,0,0,0,0,0];
+	score=0;
+	showlvzi();
+	analyse();
+}
+function showlvzi(){
+    var textforequip="";
+	for(var i=0;i<12;i++){
+		if(prosco[i]>0){
+			textforequip = textforequip+"["+prosco[i]/4.5+"]"+basewords[i]+(prosco[i]*basenum[i]).toFixed(0)+"\n";
+		}
+	}
+	document.getElementById("greenpart").value= textforequip;
+}
+function saveequip(){
+	var mytab2=document.getElementById("table2");
+	mytab2.rows[num_equip].className = 'basecolor';
+    num_equip = num_equip+1;
+	guiling();
+	analyse();
+}
+//装备文本分析
+function analyse(){
+	var qhua = document.getElementById("qianghua").value;
+	var scores = [0,0,0,0,0,0,0,0,0,0,0,0]
+	var zhishu = [0,0,0,0,0];//装备序号，治疗指数，内防指数，外防指数，装备分数
+	zhishu[5] = score+8*(1+0.25*qhua);
+    zhishu[0] = num_equip;
+	//取词条属性值
+	for(var i=0;i<12;i++){
+		equipnum[i] = (prosco[i]*basenum[i]+whitesco[i]*basenum[i]*(1+0.25*qhua)).toFixed(0);
+		scores[i] = prosco[i]+whitesco[i]*(1+0.25*qhua);
+	}
+	//阮归云 沈剑心	唐小珂	康宴别	沐晴柔  温折枝	年小鹿	
+	var basedps = [9682,21924,24760,13251,12900,11951,10319];
+	var attcoef = [2.6596,3.8458,3.938,2.3362,2.3488,3.1465,2.6747];
+	var skillcoef = [9.763,4.402,1.926,3.983,1.108,3.338,2.882];
+	var todps = [0,0,0,0,0,0,0];
+	//会效加成不高于150%
+	if(equipnum[3]/27513>1.5){
+		equipnum[3]=41269.5;
+	}
+	for(var i=0;i<2;i++){
+	 todps[i]=(basedps[i]+equipnum[1]*attcoef[i]+equipnum[6]*skillcoef[i])*(equipnum[4]/78622.5+1)*(1+equipnum[2]/78266.5*(0.5+equipnum[3]/27513));
+	}
+	todps[2]=(basedps[2]+equipnum[1]*attcoef[2]+equipnum[6]*skillcoef[2])*(equipnum[4]*0.1915/15056+1)*(0.6572+0.6572*equipnum[2]/78266.5*(0.5+equipnum[3]/27513)+0.2285*(1.5+equipnum[3]/27513));
+	todps[3]=(basedps[3]+equipnum[1]*attcoef[3]+equipnum[6]*skillcoef[3]+equipnum[0]*0.0325)*(equipnum[4]/78622.5+1)*(1+equipnum[2]/78266.5*(0.5+equipnum[3]/27513));
+	todps[4]=(basedps[4]+equipnum[1]*attcoef[4]+equipnum[6]*skillcoef[4]+equipnum[11]*1.879)*(equipnum[4]/78622.5+1)*(1+equipnum[2]/78266.5*(0.5+equipnum[3]/27513));
+	for(var i=5;i<7;i++){
+	 todps[i]=(basedps[i]+equipnum[1]*attcoef[i]+equipnum[6]*skillcoef[i])*(equipnum[4]/78622.5+1)*(1+equipnum[2]/78266.5*(0.5+equipnum[3]/27513));
+	}
+	for(var i=0;i<7;i++){
+		if(equipnum[5]/44291>0.25){
+			todps[i]=todps[i]*1.25*0.995;
+		}else{
+			todps[i]=todps[i]*(1+equipnum[5]/44291)*0.995;
+		}
+	}
+	zhishu[1]= (parseFloat(equipnum[0])+67723)/42000*(42000+parseFloat(equipnum[8]))/67723;
+	console.log(equipnum[0]+"/"+equipnum[8]);
+    zhishu[2]= (parseFloat(equipnum[0])+67723)/42000*(42000+parseFloat(equipnum[9]))/67723;
+	if(prosco[10]>=4.5){
+	    zhishu[1]=(zhishu[1]+1).toFixed(2);
+        zhishu[2]=(zhishu[2]+1).toFixed(2);
+	}else{
+	    zhishu[1]=(zhishu[1]+prosco[10]/4.5).toFixed(2);
+        zhishu[2]=(zhishu[2]+prosco[10]/4.5).toFixed(2);
+	}
+	if(equipnum[3]/27513>0.25){
+		zhishu[3] = (5000+parseFloat(equipnum[11]))/50*(1+equipnum[2]/78622.5*(0.5+equipnum[3]/27513))-100;
+		zhishu[4] = (7000+parseFloat(equipnum[11]))/70*(1+equipnum[2]/78622.5*(0.5+equipnum[3]/27513))-100;
+	}else{
+		zhishu[3] = (5000+parseFloat(equipnum[11]))/50*(1+equipnum[2]/78622.5*0.75)-100;
+		zhishu[4] = (7000+parseFloat(equipnum[11]))/70*(1+equipnum[2]/78622.5*0.75)-100;
+	}
+
+	mytab2=document.getElementById("table2");
+	if(num_equip>=mytab2.rows.length){
+		mytab2.insertRow(num_equip);
+		for(var i=0;i<9;i++){
+	    	mytab2.rows[num_equip].insertCell(0);
+		}
+	}
+	mytab2.rows[num_equip].cells[0].innerHTML=num_equip;
+	mytab2.rows[num_equip].className = 'setcolor';
+	for(var i=0;i<7;i++){
+		mytab2.rows[num_equip].cells[i+1].innerHTML = todps[i].toFixed(0);
+	}
+	if(zhishu[3]<60){
+		mytab2.rows[num_equip].cells[8].innerHTML = "<font style='color:red'>"+zhishu[5]+"</font>";
+	}else{
+		mytab2.rows[num_equip].cells[8].innerHTML = zhishu[5].toFixed(1);
+	}
+		var mytab=document.getElementById("table");
+	if(num_equip>=mytab.rows.length){
+		mytab.insertRow(num_equip);
+		for(var i=0;i<6;i++){
+	    	mytab.rows[num_equip].insertCell(0);
+		}
+	}
+	for(var i=0;i<6;i++){
+		mytab.rows[num_equip].cells[i].innerHTML = zhishu[i];
+	}
+	mytab.rows[num_equip].cells[3].innerHTML = zhishu[3].toFixed(1)+"%";
+	mytab.rows[num_equip].cells[4].innerHTML = zhishu[4].toFixed(1)+"%";
+	if(zhishu[5]<60){
+		mytab.rows[num_equip].cells[5].innerHTML = "<font style='color:red'>"+zhishu[5]+"</font>";
+	}
+}
+//刷新页面清空所有数据
+function qingkong(){
+   location.reload();
+}
+function shuoming(){
+   window.alert("dps预期是对121级boss的输出（大战boss）;\n内外防指数跟血量和内外防有关，最高约为37；最低为1.92*(1+0.25*强化等级）。\n治疗提升跟治疗成效和双会有关，最低0%无加成，成都花姐偏低是因为本身治疗高。")
+}
+
+analyse();
+</script>
+
+</body>
+</html>
